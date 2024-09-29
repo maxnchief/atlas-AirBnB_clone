@@ -1,9 +1,11 @@
 #!/usr/bin/python3
+"""this is the console module"""
+
+
 import cmd
 from models import storage
 from models.user import User
 
-"""this is the console module"""
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
