@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 from uuid import uuid4
 from datetime import datetime
-from models import storage  # Import storage to handle persistence
 
 class BaseModel:
     def __init__(self):
         self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.created_at = datetime.now().isoformat()
+        self.updated_at = datetime.now().isoformat()
 
     def save(self):
         """Updates the `updated_at` attribute and saves the object."""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.now().isoformat()
+        from models import storage  # Lazy loading to avoid circular import
         storage.save()  # Call the save method on the storage
 
     def to_dict(self):

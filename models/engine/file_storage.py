@@ -1,12 +1,10 @@
-#!/usr/bin/python3
-"""FileStorage class for the AirBnB clone project"""
+# models/engine/file_storage.py
 
 import json
-from models.base_model import BaseModel
-
+from models.base_model import BaseModel  # Import BaseModel here as needed
 
 class FileStorage:
-    """Serializes to a JSON file & deserializes JSON file to instances"""
+    """Serializes instances to a JSON file and deserializes JSON file to instances."""
 
     __file_path = "file.json"
     __objects = {}
@@ -22,9 +20,7 @@ class FileStorage:
 
     def save(self):
         """Serializes objects to the JSON file"""
-        obj_dict = {
-            key: obj.to_dict() for key, obj in FileStorage.__objects.items()
-        }
+        obj_dict = {key: obj.to_dict() for key, obj in FileStorage.__objects.items()}
         with open(FileStorage.__file_path, 'w') as f:
             json.dump(obj_dict, f)
 
