@@ -2,7 +2,7 @@
 '''this is the console module'''
 
 
-import cmds
+import cmd
 from models import storage
 from models.user import User
 
