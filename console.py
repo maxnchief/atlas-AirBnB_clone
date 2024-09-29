@@ -16,8 +16,8 @@ class HBNBCommand(cmd.Cmd):
         print("")
         return True
     
-    def do_quit(self,):
-        return True
+    def quit(self):
+        return True        
     
     def emptyline(self):
         pass
