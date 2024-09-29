@@ -3,7 +3,10 @@ from models.user import User  # Make sure to import User class
 from models.base_model import BaseModel
 
 class FileStorage:
-    # ... existing methods
+    def __init__(self):
+        """Initialize FileStorage with a file path and an empty objects dictionary."""
+        self.__file_path = "file.json"  # Set your desired file path here
+        self.__objects = {}  # Initialize an empty dictionary to store objects
 
     def all(self):
         """Returns a dictionary of all stored objects"""
