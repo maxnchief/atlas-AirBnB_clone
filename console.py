@@ -12,6 +12,12 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self,line):
         print("")
         return True
+    
+    def do_quit(self, arg):
+        return True
+    
+    def emptyline(self) -> bool:
+        return super().emptyline()
 
     def do_create(self, arg):
         """Creates a new User"""
