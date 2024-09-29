@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+  #!/usr/bin/python3
 """FileStorage class for the AirBnB clone project"""
 
 import json
@@ -22,7 +22,9 @@ class FileStorage:
 
     def save(self):
         """Serializes objects to the JSON file"""
-        obj_dict = {key: obj.to_dict() for key, obj in FileStorage.__objects.items()}
+        obj_dict = {
+            key: obj.to_dict() for key, obj in FileStorage.__objects.items()
+        }
         with open(FileStorage.__file_path, 'w') as f:
             json.dump(obj_dict, f)
 
