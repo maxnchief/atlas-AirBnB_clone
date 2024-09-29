@@ -1,4 +1,4 @@
-  #!/usr/bin/python3
+#!/usr/bin/python3
 """FileStorage class for the AirBnB clone project"""
 
 import json
@@ -6,7 +6,7 @@ from models.base_model import BaseModel
 
 
 class FileStorage:
-    """Serializes instances to a JSON file and deserializes JSON file to instances"""
+    """Serializes to a JSON file & deserializes JSON file to instances"""
 
     __file_path = "file.json"
     __objects = {}
