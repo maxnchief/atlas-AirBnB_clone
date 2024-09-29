@@ -6,6 +6,7 @@ import sys
 import models
 from models.base_model import BaseModel
 
+
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for AirBnB objects"""
 
