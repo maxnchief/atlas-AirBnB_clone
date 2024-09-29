@@ -1,13 +1,14 @@
 #!/usr/bin/python
+'''the state module'''
 
 from models.base_model import BaseModel
-'''imports the basemodel class'''
 
 
-class state(BaseModel):
-    '''creates the state clase which inherits the base model class'''
+class State(BaseModel):
+    '''The state the listing is located
     
-    name: str = ""
+    Attributes
+        name
+    '''    
+    name = ""
 
-    def __init__(self):
-    
