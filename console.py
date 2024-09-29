@@ -19,7 +19,7 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self,):
         return True
     
-    def emptyline(self)
+    def emptyline(self):
         pass
 
     def do_create(self, arg):
