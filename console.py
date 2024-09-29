@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 '''this is the console module'''
 
-
 import cmd
 from models import storage
 from models.user import User
@@ -13,15 +12,15 @@ class HBNBCommand(cmd.Cmd):
     def do_help(self, arg):
         return super().do_help(arg)
     
-    def do_EOF(self,line):
+    def do_EOF(self,):
         print("")
         return True
     
-    def do_quit(self, arg):
+    def do_quit(self,):
         return True
     
-    def emptyline(self) -> bool:
-        return super().emptyline()
+    def emptyline(self)
+        pass
 
     def do_create(self, arg):
         """Creates a new User"""
