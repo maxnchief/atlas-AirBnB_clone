@@ -10,7 +10,7 @@ from models.user import User
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
-    def do_help(self, arg: str) -> bool | None:
+    def do_help(self, arg):
         return super().do_help(arg)
     
     def do_EOF(self,line):
