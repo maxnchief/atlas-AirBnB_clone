@@ -29,20 +29,17 @@ class HBNBCommand(cmd.Cmd):
             print("** no user found **")
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id"""
-    try:
+        """Destroys a User by ID"""
         args = arg.split()
-        if len(args) != 2:
-            print("Usage: destroy <User> <id>")
-        cls = globals().get(args[0])
-        if not cls:
-            print(f"Class '{args[0]}' not found")
-        obj = cls.get(args[1])
-        obj.delete()
-        print(f"{cls.__name__} with id {obj.id} deleted")
-
-    except Exception as e:
-        print(f"Error: {e}")
+        if len(args) < 1:
+            print("** user id missing **")
+            return
+        user_key = f"User.{args[0]}"
+        if user_key in storage.all():
+            del storage.all()[user_key]
+            storage.save()
+        else:
+            print("** no user found **")
 
     def do_update(self, arg):
         """Updates a User's attributes"""
