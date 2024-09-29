@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-"""this is the console module"""
+'''this is the console module'''
 
 
-import cmd
+import cmds
 from models import storage
 from models.user import User
 
