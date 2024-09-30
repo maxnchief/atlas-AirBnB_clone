@@ -5,33 +5,35 @@ import cmd
 from models import storage
 from models.user import User
 
-
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     def do_help(self, arg):
         return super().do_help(arg)
     
-    def do_EOF(self,):
+    def do_EOF(self):
         print("")
         return True
     
-    def quit(self, args):
+    def do_quit(self, args):
         '''Quits the program'''
         return True        
-    
+        
     def emptyline(self):
         pass
 
     def do_create(self, arg):
         """Creates a new User"""
-        user = User()
-        user.first_name = input("First Name: ")
-        user.last_name = input("Last Name: ")
-        user.email = input("Email: ")
-        user.password = input("Password: ")
-        user.save()
-        print(user.id)
+        try:
+            user = User()
+            user.first_name = input("First Name: ")
+            user.last_name = input("Last Name: ")
+            user.email = input("Email: ")
+            user.password = input("Password: ")
+            user.save()
+            print(user.id)
+        except Exception as e:
+            print(f"Error creating user: {e}")
 
     def do_show(self, arg):
         """Shows a User by ID"""
@@ -67,12 +69,18 @@ class HBNBCommand(cmd.Cmd):
         user_key = f"User.{args[0]}"
         user = storage.all().get(user_key)
         if user:
-            setattr(user, args[1], args[2])
-            user.save()
+            if hasattr(user, args[1]):
+                setattr(user, args[1], args[2])
+                user.save()
+            else:
+                print("** attribute does not exist **")
         else:
             print("** no user found **")
 
     def do_all(self, arg):
         """Shows all Users"""
         users = [str(user) for user in storage.all().values() if isinstance(user, User)]
-        print(users)
+        print(", ".join(users) if users else "No users found.")
+
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
