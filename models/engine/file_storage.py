@@ -1,7 +1,6 @@
 import json
-from models.user import User
+from models.user import User  # Import User class
 from models.base_model import BaseModel
-# Import other model classes if applicable
 
 class FileStorage:
     def __init__(self):
@@ -15,9 +14,8 @@ class FileStorage:
 
     def new(self, obj):
         """Adds a new object to the storage."""
-        if isinstance(obj, BaseModel):  # Ensure the object is a BaseModel
-            key = f"{obj.__class__.__name__}.{obj.id}"
-            self.__objects[key] = obj
+        key = f"{obj.__class__.__name__}.{obj.id}"
+        self.__objects[key] = obj
 
     def save(self):
         """Saves the objects to a JSON file."""
@@ -26,18 +24,20 @@ class FileStorage:
 
     def reload(self):
         """Loads the objects from the JSON file."""
+        class_map = {
+            "User": User,
+            "BaseModel": BaseModel,
+            # Add other models as needed
+        }
         try:
             with open(self.__file_path, 'r') as file:
                 obj_dict = json.load(file)
                 for key, value in obj_dict.items():
                     class_name = value["__class__"]
-                    if class_name == "User":
-                        obj = User(**value)
-                    elif class_name == "BaseModel":
-                        obj = BaseModel(**value)
-                    # Add other class checks as needed, e.g., Place, City, etc.
+                    if class_name in class_map:
+                        obj = class_map[class_name](**value)
+                        self.new(obj)
                     else:
-                        continue  # If class name doesn't match, skip
-                    self.new(obj)  # Store the new instance in __objects
+                        print(f"Unknown class name: {class_name}")
         except FileNotFoundError:
-            pass  # No file to load; this is fine
+            pass  # No file to load
