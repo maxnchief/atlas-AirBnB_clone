@@ -35,5 +35,6 @@ class FileStorage:
                         obj = BaseModel(**value)
                     self.new(obj)
         except FileNotFoundError:
-            print("File not found. No objects to load.")
+            # Remove the print statement to avoid cluttering output
+            # print("File not found. No objects to load.")
             pass  # This is fine; it simply means there was nothing to load
