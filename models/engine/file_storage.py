@@ -34,21 +34,9 @@ class FileStorage:
                 obj_dict = json.load(file)
                 for key, value in obj_dict.items():
                     class_name = value["__class__"]
-                    if class_name == "User":
-                        obj = User(**value)
-                    elif class_name == "Amenity":
-                        obj = Amenity(**value)
-                    elif class_name == "City":
-                        obj = City(**value)
-                    elif class_name == "Place":
-                        obj = Place(**value)
-                    elif class_name == "Review":
-                        obj = Review(**value)
-                    elif class_name == "State":
-                        obj = State(**value)
-                    else:
-                        obj = BaseModel(**value)  # Fallback for unrecognized classes
-                    self.new(obj)
+                    if class_name in self.class_mapping:
+                        obj = self.class_mapping[class_name](**value)
+                        self.new(obj)
         except FileNotFoundError:
             # No file to load from, so do nothing
             pass
