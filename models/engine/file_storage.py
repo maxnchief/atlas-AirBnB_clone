@@ -1,6 +1,7 @@
 import json
-from models.user import User  # Make sure to import User class
+from models.user import User
 from models.base_model import BaseModel
+# Import other model classes if applicable
 
 class FileStorage:
     def __init__(self):
@@ -14,8 +15,9 @@ class FileStorage:
 
     def new(self, obj):
         """Adds a new object to the storage."""
-        key = f"{obj.__class__.__name__}.{obj.id}"
-        self.__objects[key] = obj
+        if isinstance(obj, BaseModel):  # Ensure the object is a BaseModel
+            key = f"{obj.__class__.__name__}.{obj.id}"
+            self.__objects[key] = obj
 
     def save(self):
         """Saves the objects to a JSON file."""
@@ -31,10 +33,11 @@ class FileStorage:
                     class_name = value["__class__"]
                     if class_name == "User":
                         obj = User(**value)
-                    else:
+                    elif class_name == "BaseModel":
                         obj = BaseModel(**value)
-                    self.new(obj)
+                    # Add other class checks as needed, e.g., Place, City, etc.
+                    else:
+                        continue  # If class name doesn't match, skip
+                    self.new(obj)  # Store the new instance in __objects
         except FileNotFoundError:
-            # Remove the print statement to avoid cluttering output
-            # print("File not found. No objects to load.")
-            pass  # This is fine; it simply means there was nothing to load
+            pass  # No file to load; this is fine
