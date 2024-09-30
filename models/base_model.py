@@ -3,10 +3,21 @@ from uuid import uuid4
 from datetime import datetime
 
 class BaseModel:
-    def __init__(self):
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    def __init__(self, *args, **kwargs):
+        """Initialize a BaseModel instance."""
+        if kwargs:
+            # Re-create an instance from the dictionary (kwargs)
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    # Convert string to datetime object
+                    value = datetime.fromisoformat(value)
+                if key != "__class__":
+                    setattr(self, key, value)
+        else:
+            # Create a new instance
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def save(self):
         """Updates the `updated_at` attribute and saves the object."""
