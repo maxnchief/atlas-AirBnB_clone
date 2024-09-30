@@ -1,6 +1,11 @@
 import json
-from models.user import User  # Import User class
+from models.user import User
+from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 
 class FileStorage:
     def __init__(self):
@@ -24,20 +29,26 @@ class FileStorage:
 
     def reload(self):
         """Loads the objects from the JSON file."""
-        class_map = {
-            "User": User,
-            "BaseModel": BaseModel,
-            # Add other models as needed
-        }
         try:
             with open(self.__file_path, 'r') as file:
                 obj_dict = json.load(file)
                 for key, value in obj_dict.items():
                     class_name = value["__class__"]
-                    if class_name in class_map:
-                        obj = class_map[class_name](**value)
-                        self.new(obj)
+                    if class_name == "User":
+                        obj = User(**value)
+                    elif class_name == "Amenity":
+                        obj = Amenity(**value)
+                    elif class_name == "City":
+                        obj = City(**value)
+                    elif class_name == "Place":
+                        obj = Place(**value)
+                    elif class_name == "Review":
+                        obj = Review(**value)
+                    elif class_name == "State":
+                        obj = State(**value)
                     else:
-                        print(f"Unknown class name: {class_name}")
+                        obj = BaseModel(**value)  # Fallback for unrecognized classes
+                    self.new(obj)
         except FileNotFoundError:
-            pass  # No file to load
+            # No file to load from, so do nothing
+            pass
