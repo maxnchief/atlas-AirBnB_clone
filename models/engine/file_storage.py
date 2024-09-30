@@ -1,5 +1,5 @@
 import json
-from models.user import User  # Ensure User class is imported
+from models.user import User  # Make sure to import User class
 from models.base_model import BaseModel
 
 class FileStorage:
@@ -20,7 +20,6 @@ class FileStorage:
     def save(self):
         """Saves the objects to a JSON file."""
         with open(self.__file_path, 'w') as file:
-            # Convert each object to dictionary and save as JSON
             json.dump({key: obj.to_dict() for key, obj in self.__objects.items()}, file)
 
     def reload(self):
@@ -30,15 +29,11 @@ class FileStorage:
                 obj_dict = json.load(file)
                 for key, value in obj_dict.items():
                     class_name = value["__class__"]
-                    # Debugging print
-                    print(f"Reloading object of class {class_name} with key {key}")
                     if class_name == "User":
                         obj = User(**value)
-                    elif class_name == "BaseModel":
-                        obj = BaseModel(**value)
-                    # Add additional model classes as needed
                     else:
-                        continue  # Skip unknown class types
+                        obj = BaseModel(**value)
                     self.new(obj)
         except FileNotFoundError:
             print("File not found. No objects to load.")
+            pass  # This is fine; it simply means there was nothing to load
