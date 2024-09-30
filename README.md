@@ -15,3 +15,4 @@ To start the command interpreter:
 
 ~atlas-AirBnB_clone$ ./console.py
 
+for help: type "help" into the console
