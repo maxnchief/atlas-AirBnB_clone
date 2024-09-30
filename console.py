@@ -35,6 +35,7 @@ class HBNBCommand(cmd.Cmd):
         
         # Create instance and save
         instance = self.classes[arg]()
+        storage.new(instance)  # Ensure the instance is added to storage
         instance.save()
         print(instance.id)
 
@@ -148,4 +149,5 @@ class HBNBCommand(cmd.Cmd):
         pass
 
 if __name__ == '__main__':
+    storage.reload()  # Load existing objects
     HBNBCommand().cmdloop()
