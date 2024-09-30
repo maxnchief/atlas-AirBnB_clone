@@ -14,15 +14,14 @@ from models.state import State
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
-    # Mapping of class names to classes
-    class_mapping = {
+    classes = {
         "BaseModel": BaseModel,
         "User": User,
         "Amenity": Amenity,
         "City": City,
         "Place": Place,
         "Review": Review,
-        "State": State,
+        "State": State
     }
 
     def do_create(self, arg):
@@ -30,12 +29,12 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
             return
-        if arg not in self.class_mapping:
+        if arg not in self.classes:
             print("** class doesn't exist **")
             return
         
         # Create instance and save
-        instance = self.class_mapping[arg]()
+        instance = self.classes[arg]()
         instance.save()
         print(instance.id)
 
@@ -45,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        if args[0] not in self.class_mapping:
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -65,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        if args[0] not in self.class_mapping:
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -75,13 +74,14 @@ class HBNBCommand(cmd.Cmd):
         instance_key = f"{args[0]}.{args[1]}"
         if instance_key in storage.all():
             del storage.all()[instance_key]
-            storage.save()
+            storage.save()  # Save changes to JSON file
+            print("Instance deleted.")
         else:
             print("** no instance found **")
 
     def do_all(self, arg):
         """Prints all string representation of all instances based or not on the class name."""
-        if arg and arg not in self.class_mapping:
+        if arg and arg not in self.classes:
             print("** class doesn't exist **")
             return
 
@@ -100,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        if args[0] not in self.class_mapping:
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -126,11 +126,10 @@ class HBNBCommand(cmd.Cmd):
         # Cast value to the appropriate type
         if value.isdigit():
             value = int(value)
-        else:
-            try:
-                value = float(value)
-            except ValueError:
-                pass  # Keep it as a string if conversion fails
+        try:
+            value = float(value)
+        except ValueError:
+            pass  # Keep it as a string if conversion fails
         
         setattr(instance, attribute_name, value)
         instance.save()
