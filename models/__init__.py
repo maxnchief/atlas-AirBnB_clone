@@ -1,4 +1,4 @@
-from models.file_storage import FileStorage
+from models.engine.file_storage import FileStorage
 
 # Initialize storage globally
 storage = FileStorage()
