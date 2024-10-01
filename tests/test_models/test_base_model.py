@@ -59,5 +59,19 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_model.created_at, self.model.created_at)
         self.assertEqual(new_model.updated_at, self.model.updated_at)
 
+    def test_save_method(self):
+        """Test the save method."""
+        old_updated_at = self.model.updated_at
+        self.model.save()
+        new_updated_at = self.model.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
+        self.assertTrue(new_updated_at > old_updated_at)
+
+    def test_save_calls_storage_save(self):
+        """Test that save method calls storage.save."""
+        with unittest.mock.patch('models.storage.save') as mock_save:
+            self.model.save()
+            mock_save.assert_called_once()
+
 if __name__ == '__main__':
     unittest.main()
